@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horizonte - Apoyo y Fe para el Migrante</title>
+    <!-- Iconos de FontAwesome para WhatsApp y Mundo -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    <style>
+        :root {
+            --primary-color: #2a52be;
+            --whatsapp-color: #25D366;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #333;
+        }
+        .header {
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-sizing: border-box;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        select {
+            padding: 8px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            max-width: 500px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .phrase {
+            font-size: 20px;
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 10px;
+            color: #444;
+        }
+        .category {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .btn-next {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(42, 82, 190, 0.3);
+            transition: 0.2s;
+        }
+        .btn-next:active { transform: scale(0.95); }
+        
+        .btn-whatsapp {
+            background: var(--whatsapp-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        /* Botón Flotante Directorio */
+        .btn-float {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: #ff5722;
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 99;
+        }
+
+        /* Banner de Anuncios */
+        .ad-banner {
+            width: 100%;
+            background: #333;
+            color: #aaa;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 12px;
+            position: sticky;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">Horizonte ✨</div>
+        <select id="langSelect" onchange="changeLanguage()">
+            <option value="es">Español</option>
+            <option value="it">Italiano</option>
+            <option value="uk">Українська (Ucraniano)</option>
+            <option value="ru">Русский (Ruso)</option>
+            <option value="ar">العربية (Árabe)</option>
+            <option value="tl">Tagalog (Filipino)</option>
+            <option value="de">Deutsch</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="category" id="catLabel">Fe y Esperanza</div>
+            <p class="phrase" id="phraseTxt">"No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo."</p>
+        </div>
+        <button class="btn-next" onclick="getNewPhrase()" id="btnNext">Nueva Frase ✨</button>
+        <a href="#" class="btn-whatsapp" id="wsBtn" onclick="shareWhatsApp()">
+            <i class="fab fa-whatsapp"></i> Compartir en WhatsApp
+        </a>
+    </div>
+
+    <!-- Botón de guía telefónica para migrantes -->
+    <div class="btn-float" onclick="openDirectory()" title="Guía de Apoyo">
+        <i class="fas fa-phone-alt"></i>
+    </div>
+
+    <!-- Espacio del Bloque de Anuncio Real de Google AdMob -->
+    <div class="ad-banner">
+        <!-- Google AdMob Banner Inferior Activo -->
+        <small>Publicidad de Google AdMob</small>
+        <div id="admob-placeholder" style="font-size: 10px; color:#666;">
+            ID Bloque: ca-app-pub-6957151572334748/9483361433
+        </div>
+    </div>
+
+    <script>
+        // Muestra pequeña de frases en varios idiomas para migrantes (Base expandible)
+        const database = {
+            es: [
+                "No temas, porque yo estoy contigo; no te angusties, porque yo soy tu Dios. Te fortaleceré y te ayudaré.",
+                "Tu situación actual no es tu destino final. Lo mejor está por venir en este nuevo horizonte.",
+                "El camino del migrante es de valientes. Dios guarda tus pasos a donde quiera que vayas."
+            ],
+            it: [
+                "Non temere, perché io sono con te; non smarrirti, perché io sono il tuo Dio. Ti rendo forte.",
+                "La tua situazione attuale solo un capitolo, non la fine della storia.",
+                "Il viaggio del migrante è per i coraggiosi. Dio protegge i tuoi passi."
+            ],
+            uk: [
+                "Не бійся, бо я з тобою; не лякайся, бо я твій Бог. Я зміцню тебе.",
+                "Ваше теперішнє становище - це не кінцевий пункт призначення. Найкраще ще попереду.",
+                "Шлях мігранта – це шлях сміливих. Бог береже твої кроки."
+            ]
+        };
+
+        let currentLang = 'es';
+
+        function changeLanguage() {
+            currentLang = document.getElementById('langSelect').value;
+            // Traducción básica de botones de la interfaz
+            if(currentLang === 'it') {
+                document.getElementById('btnNext').innerText = "Nuova Frase ✨";
+                document.getElementById('catLabel').innerText = "Fede і Speranza";
+            } else if(currentLang === 'uk') {
+                document.getElementById('btnNext').innerText = "Нова фраза ✨";
+                document.getElementById('catLabel').innerText = "Віра і Надія";
+            } else {
+                document.getElementById('btnNext').innerText = "Nueva Frase ✨";
+                document.getElementById('catLabel').innerText = "Fe y Esperanza";
+            }
+            getNewPhrase();
+        }
+
+        function getNewPhrase() {
+            const phrases = database[currentLang] || database['es'];
+            const random = phrases[Math.floor(Math.random() * phrases.length)];
+            document.getElementById('phraseTxt').innerText = `"${random}"`;
+        }
+
+        function shareWhatsApp() {
+            const text = document.getElementById('phraseTxt').innerText;
+            const appLink = "\n\nDescarga Horizonte App en Google Play Store!";
+            const url = "https://whatsapp.com" + encodeURIComponent(text + appLink);
+            document.getElementById('wsBtn').href = url;
+        }
+
+        function openDirectory() {
+            alert("🚨 Directorio de Apoyo Humanitario:\n\n1. Números de Emergencia Global: emergency services\n2. Red de Albergues y Asistencia Médica básica en fronteras activa.");
+        }
+    </script>
+</body>
+</html>
