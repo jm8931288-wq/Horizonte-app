@@ -1,0 +1,28 @@
+name: Construir APK de Horizonte
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el codigo de GitHub
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Instalar herramientas
+        run: |
+          npm install
+
+      - name: Construir el archivo APK definitivo
+        run: |
+          echo "Generando APK base para Horizonte..."
