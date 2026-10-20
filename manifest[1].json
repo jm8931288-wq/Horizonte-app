@@ -1,0 +1,16 @@
+{
+  "name": "Horizonte — Fe y esperanza",
+  "short_name": "Horizonte",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f2f7f3",
+  "theme_color": "#125b4b",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
