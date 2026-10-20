@@ -1,0 +1,6 @@
+{
+  "appId": "com.tuempresa.horizonte",
+  "appName": "Horizonte",
+  "webDir": ".",
+  "bundledWebRuntime": false
+}
