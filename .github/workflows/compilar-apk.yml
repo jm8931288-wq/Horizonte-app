@@ -19,10 +19,25 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Instalar herramientas
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Instalar herramientas de la app
         run: |
           npm install
+          npm install @capacitor/core @capacitor/android
 
-      - name: Construir el archivo APK definitivo
+      - name: Crear carpetas de Android reales
         run: |
-          echo "Generando APK base para Horizonte..."
+          npx cap init Horizonte com.tuempresa.horizonte --web-dir=.
+          npx cap add android
+          npx cap sync android
+
+      - name: Guardar carpetas para revision
+        uses: actions/upload-artifact@v4
+        with:
+          name: Estructura-Android-Horizonte
+          path: .
